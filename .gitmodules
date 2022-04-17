@@ -1,3 +1,6 @@
 [submodule "Employees-counter-react"]
 	path = Employees-counter-react
 	url = https://github.com/DanilaPeace/Employees-counter-react
+[submodule "react-marver-app"]
+	path = react-marver-app
+	url = https://github.com/DanilaPeace/react-marver-app
