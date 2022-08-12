@@ -1,5 +1,5 @@
 import React from "react";
 
-export const Button = ({ btnLabel }) => {
-  return <button>{btnLabel}</button>;
+export const Button = ({ btnLabel, ...props }) => {
+  return <button {...props}>{btnLabel}</button>;
 };

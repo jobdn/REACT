@@ -28,11 +28,16 @@ export const StatisticsCheck = () => {
     setTimeDependTitle();
   }, []);
 
+  const handleLoginClick = () => {
+    console.log("login-click");
+    window.ym(89940271,'reachGoal','login-click');    
+  }
+
   return (
     <>
       <Title titleNumber={titleNum}/>
       
-      <Button btnLabel={"login"}></Button>
+      <Button onClick={handleLoginClick} btnLabel={"login"}></Button>
     </>
   )
 }
