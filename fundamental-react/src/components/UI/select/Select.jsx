@@ -1,13 +1,19 @@
 import React from "react";
 
+import classes from "./Select.module.scss";
+
 export const Select = ({
   options,
   defaultTitle,
-  sortValue,
+  selectValue,
   onChangeSelect,
 }) => {
   return (
-    <select value={sortValue} onChange={(e) => onChangeSelect(e.target.value)}>
+    <select
+      value={selectValue}
+      onChange={(e) => onChangeSelect(e.target.value)}
+      className={classes.select}
+    >
       <option value="" disabled>
         {defaultTitle}
       </option>

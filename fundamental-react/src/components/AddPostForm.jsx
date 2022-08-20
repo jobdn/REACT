@@ -2,7 +2,7 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 
 import { Button } from "./UI/button/Button";
-import { Input } from "./UI/Input";
+import Input from "./UI/Input";
 
 export const AddPostForm = ({ onAddPost }) => {
   const [newPost, setNewPost] = React.useState({
