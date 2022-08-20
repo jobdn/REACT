@@ -2,6 +2,7 @@ import React from "react";
 
 import { AddPostForm } from "./components/AddPostForm";
 import { PostList } from "./components/PostList";
+import PostsFilter from "./components/PostsFilter";
 
 import "./styles/App.scss";
 
@@ -12,31 +13,36 @@ function App() {
     { id: 1, title: "b", body: "lorem" },
     { id: 3, title: "Title 3", body: "z" },
   ]);
-  const [selectValue, setSelectValue] = React.useState("");
-  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const [filter, setFilter] = React.useState({
+    sort: "",
+    query: ""
+  })
+
   const options = [
     { value: "title", title: "Sort by title" },
     { value: "body", title: "Sort by body" },
   ];
 
   const getSortedPosts = () => {
-    console.log("getSortedPosts was called!!!");
-    if (selectValue) {
+    if (filter.sort) {
       return posts
         .slice()
-        .sort((a, b) => a[selectValue].localeCompare(b[selectValue]));
+        .sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
     }
 
     return posts;
   }
 
-  const sortedPosts = React.useMemo(getSortedPosts, [posts, selectValue]);
+  const sortedPosts = React.useMemo(getSortedPosts, [filter.sort, posts]);
 
   const filteredAndSortedPosts = React.useMemo(() => {
+    return sortedPosts.filter(post =>
+      post.title.toLowerCase().includes(filter.query.toLowerCase()) ||
+      post.body.toLowerCase().includes(filter.query.toLowerCase())
+    );
 
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.body.toLowerCase().includes(searchQuery.toLowerCase()));
-
-  }, [sortedPosts, searchQuery])
+  }, [sortedPosts, filter.query]);
 
   const addPost = (newPost) => {
     setPosts([newPost, ...posts]);
@@ -46,24 +52,34 @@ function App() {
     setPosts(posts.filter((post) => post.id !== postId));
   };
 
-  const sortPostsBy = (field) => {
-    console.log(field);
-    setSelectValue(field);
-  };
-
   return (
     <main className="App">
       <AddPostForm onAddPost={addPost} />
-      <PostList
-        posts={filteredAndSortedPosts}
-        title="List of posts"
-        onDeletePost={deletePost}
-        selectValue={selectValue}
-        onChangeSelect={sortPostsBy}
-        options={options}
-        searchPostsQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+
+
+      <section>
+        {filteredAndSortedPosts.length ? (
+          <>
+            <h2 className="postsList__title">List of posts</h2>
+          </>
+        ) : (
+          <h2 className="postsList__title">There are not posts :C</h2>
+        )}
+
+        <PostsFilter
+          options={options}
+          filter={filter}
+          onChangeFilter={setFilter}
+        />
+
+        <PostList
+          posts={filteredAndSortedPosts}
+          title="List of posts"
+          onDeletePost={deletePost}
+          options={options}
+          query={filter.query}
+        />
+      </section>
     </main>
   );
 }
