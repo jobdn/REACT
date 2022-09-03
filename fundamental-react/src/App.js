@@ -23,11 +23,10 @@ function App() {
 
   const [filter, setFilter] = React.useState({
     sort: "",
-    query: ""
-  })
+    query: "",
+  });
 
   const [modalIsShow, setModalIsShow] = React.useState(false);
-
 
   const getSortedPosts = () => {
     if (filter.sort) {
@@ -37,20 +36,21 @@ function App() {
     }
 
     return posts;
-  }
+  };
 
   const sortedPosts = React.useMemo(getSortedPosts, [filter.sort, posts]);
 
   const filteredAndSortedPosts = React.useMemo(() => {
-    return sortedPosts.filter(post =>
-      post.title.toLowerCase().includes(filter.query.toLowerCase()) ||
-      post.body.toLowerCase().includes(filter.query.toLowerCase())
+    return sortedPosts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(filter.query.toLowerCase()) ||
+        post.body.toLowerCase().includes(filter.query.toLowerCase())
     );
-
   }, [sortedPosts, filter.query]);
 
   const addPost = (newPost) => {
     setPosts([newPost, ...posts]);
+    setModalIsShow(false);
   };
 
   const deletePost = (postId) => {
@@ -59,12 +59,13 @@ function App() {
 
   return (
     <main className="App">
-
-      <Button onClick={() => setModalIsShow(!modalIsShow)} >Add post</Button>
+      <Button onClick={() => setModalIsShow(!modalIsShow)}>Add post</Button>
 
       {/* TODO: add close button */}
-      <Modal onClick={() => setModalIsShow(!modalIsShow)} isShow={modalIsShow}>
-        <AddPostForm onAddPost={addPost} closeModal={() => setModalIsShow(false)} />
+      <Modal visible={modalIsShow} setVisible={setModalIsShow}>
+        <AddPostForm
+          onAddPost={addPost}
+        />
       </Modal>
 
       <section>

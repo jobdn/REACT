@@ -1,5 +1,8 @@
 import React from "react";
+
 import { Button } from "./UI/button/Button";
+
+import cl from "./Post.module.scss";
 
 export const Post = ({ post, onDeletePost, searchedWord }) => {
   const getHighlighed = (word) => {
@@ -45,14 +48,14 @@ export const Post = ({ post, onDeletePost, searchedWord }) => {
   const highlighedBody = getHighlighed(post.body);
 
   return (
-    <article className="post">
+    <div className={cl.post}>
       <div className="post__content">
-        <h2 className="post__title">{highlighedTitle}</h2>
-        <div className="post__body">{highlighedBody}</div>
+        <h2>{highlighedTitle}</h2>
+        <div>{highlighedBody}</div>
       </div>
       <div className="post__btns">
         <Button onClick={() => onDeletePost(post.id)}>Delete post</Button>
       </div>
-    </article>
+    </div>
   );
 };

@@ -1,18 +1,28 @@
 import React from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { Post } from "./Post";
 
+import cl from "./PostList.module.scss";
+
 export const PostList = ({ posts, onDeletePost, query }) => {
   return (
-    <div>
+    <TransitionGroup>
       {posts.map((post) => (
-        <Post
+        <CSSTransition
           key={post.id}
-          post={post}
-          searchedWord={query}
-          onDeletePost={onDeletePost}
-        />
+          timeout={500}
+          classNames={{
+            // TODO: can I animate the list in the first time?
+            enter: cl.enter,
+            enterActive: cl.enter__active,
+            exit: cl.exit,
+            exitActive: cl.exit__active,
+          }}
+        >
+          <Post post={post} searchedWord={query} onDeletePost={onDeletePost} />
+        </CSSTransition>
       ))}
-    </div>
+    </TransitionGroup>
   );
 };

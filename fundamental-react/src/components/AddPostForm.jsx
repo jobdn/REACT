@@ -6,7 +6,7 @@ import Input from "./UI/Input";
 
 import classes from "./AddPostForm.module.scss";
 
-export const AddPostForm = ({ onAddPost, closeModal }) => {
+export const AddPostForm = ({ onAddPost }) => {
   const [newPost, setNewPost] = React.useState({
     title: "",
     body: "",
@@ -18,7 +18,6 @@ export const AddPostForm = ({ onAddPost, closeModal }) => {
     onAddPost({ ...newPost, id: uuid() });
 
     setNewPost({ title: "", body: "" });
-    closeModal();
   };
 
   const emptyInputs = React.useMemo(

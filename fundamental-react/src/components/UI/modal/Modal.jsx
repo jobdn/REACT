@@ -3,13 +3,18 @@ import clsx from "clsx";
 
 import classes from "./Modal.module.scss";
 
-export const Modal = ({ children, isShow, ...props }) => {
+export const Modal = ({ children, visible, setVisible, ...props }) => {
+  const closeModal = () => {
+    setVisible(false);
+  };
+
   return (
     <div
-      {...props}
       className={clsx(classes.modal, {
-        [classes.modal_active]: isShow,
+        [classes.modal_active]: visible,
       })}
+      onClick={closeModal}
+      {...props}
     >
       <div
         className={classes.modal__container}
