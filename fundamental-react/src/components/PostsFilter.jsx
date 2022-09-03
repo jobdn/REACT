@@ -3,6 +3,8 @@ import React from "react";
 import SearchPostsInput from "./UI/Input";
 import { Select } from "./UI/select/Select";
 
+import classes from "./PostsFilter.module.scss";
+
 const PostsFilter = ({ filter, options, onChangeFilter }) => {
   return (
     <>
@@ -21,6 +23,7 @@ const PostsFilter = ({ filter, options, onChangeFilter }) => {
           onChangeFilter((filter) => ({ filter, query: e.target.value }))
         }
         placeholder="Search..."
+        className={classes.input}
       />
     </>
   );

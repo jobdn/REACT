@@ -4,7 +4,9 @@ import { v4 as uuid } from "uuid";
 import { Button } from "./UI/button/Button";
 import Input from "./UI/Input";
 
-export const AddPostForm = ({ onAddPost }) => {
+import classes from "./AddPostForm.module.scss";
+
+export const AddPostForm = ({ onAddPost, closeModal }) => {
   const [newPost, setNewPost] = React.useState({
     title: "",
     body: "",
@@ -16,6 +18,7 @@ export const AddPostForm = ({ onAddPost }) => {
     onAddPost({ ...newPost, id: uuid() });
 
     setNewPost({ title: "", body: "" });
+    closeModal();
   };
 
   const emptyInputs = React.useMemo(
@@ -30,12 +33,14 @@ export const AddPostForm = ({ onAddPost }) => {
   );
 
   return (
-    <form action="">
+    <form>
       <p>
-        <label htmlFor="">
+        <label htmlFor="titleInput" className={classes.addForm__label}>
           Post title
           <Input
+            id="titleInput"
             value={newPost.title}
+            className={classes.addForm__input}
             onChange={(e) =>
               setNewPost((state) => {
                 return { ...state, title: e.target.value };
@@ -46,10 +51,12 @@ export const AddPostForm = ({ onAddPost }) => {
         </label>
       </p>
       <p>
-        <label htmlFor="">
+        <label htmlFor="bodyInput" className={classes.addForm__label}>
           Post body
           <Input
+            id="bodyInput"
             value={newPost.body}
+            className={classes.addForm__input}
             onChange={(e) =>
               setNewPost((state) => {
                 return { ...state, body: e.target.value };
@@ -60,7 +67,11 @@ export const AddPostForm = ({ onAddPost }) => {
         </label>
       </p>
       <p>
-        <Button disabled={emptyInputs} onClick={addNewPost}>
+        <Button
+          disabled={emptyInputs}
+          onClick={addNewPost}
+          className={classes.addForm__btn}
+        >
           Create post
         </Button>
       </p>

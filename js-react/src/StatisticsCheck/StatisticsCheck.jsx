@@ -6,32 +6,35 @@ export const StatisticsCheck = () => {
 
   const [titleNum, setTitleNum] = React.useState(0);
 
-  const setTimeDependTitle = () => {
+  const setCurrentTitle = () => {
     if(sessionStorage.getItem("titleNum")) {
-      console.log(titleNum);
-      setTitleNum(sessionStorage.getItem("titleNum"));
+      console.log("title in session: ", sessionStorage.getItem("titleNum"));
+      setTitleNum(+sessionStorage.getItem("titleNum"));
     } else {
-      let titleNum;
+      let currentTitleNum;
       const currentSec = new Date().getSeconds();
       if( currentSec < 20 ) {
-        titleNum = 0;
+        currentTitleNum = 0;
       } else if (currentSec < 40) {
-        titleNum = 1;
+        currentTitleNum = 1;
       } else {
-        titleNum = 2;
+        currentTitleNum = 2;
       }
       sessionStorage.setItem("titleNum", titleNum);
+      setTitleNum(currentTitleNum);
     }
   }
 
   React.useEffect(() => {
-    setTimeDependTitle();
+    setCurrentTitle();
   }, []);
 
   const handleLoginClick = () => {
     console.log("login-click");
     window.ym(89940271,'reachGoal','login-click');    
   }
+
+  console.log("titleNum in body: ", titleNum);
 
   return (
     <>

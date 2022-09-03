@@ -3,8 +3,15 @@ import React from "react";
 import { AddPostForm } from "./components/AddPostForm";
 import { PostList } from "./components/PostList";
 import PostsFilter from "./components/PostsFilter";
+import { Button } from "./components/UI/button/Button";
+import { Modal } from "./components/UI/modal";
 
 import "./styles/App.scss";
+
+const options = [
+  { value: "title", title: "Sort by title" },
+  { value: "body", title: "Sort by body" },
+];
 
 function App() {
   const [posts, setPosts] = React.useState([
@@ -19,10 +26,8 @@ function App() {
     query: ""
   })
 
-  const options = [
-    { value: "title", title: "Sort by title" },
-    { value: "body", title: "Sort by body" },
-  ];
+  const [modalIsShow, setModalIsShow] = React.useState(false);
+
 
   const getSortedPosts = () => {
     if (filter.sort) {
@@ -54,8 +59,13 @@ function App() {
 
   return (
     <main className="App">
-      <AddPostForm onAddPost={addPost} />
 
+      <Button onClick={() => setModalIsShow(!modalIsShow)} >Add post</Button>
+
+      {/* TODO: add close button */}
+      <Modal onClick={() => setModalIsShow(!modalIsShow)} isShow={modalIsShow}>
+        <AddPostForm onAddPost={addPost} closeModal={() => setModalIsShow(false)} />
+      </Modal>
 
       <section>
         {filteredAndSortedPosts.length ? (
